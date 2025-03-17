@@ -83,7 +83,7 @@ import { gsap } from "gsap";
         if (inactivityTimer) {
             clearTimeout(inactivityTimer);
         }
-        inactivityTimer = setTimeout(showLogoAndButton, 1000);
+        inactivityTimer = setTimeout(showLogoAndButton, 20000);
     }
 
     function showLogoAndButton() {
@@ -102,8 +102,8 @@ import { gsap } from "gsap";
         handSprite.y = isHorizontal ? activeCarsContainer.y - 50 : activeCarsContainer.y;
 
         handAnimation = gsap.to(handSprite, {
-            x: isHorizontal ? parkingAreaSprite.x + 650 : parkingAreaSprite.x + 630,
-            y: isHorizontal ? parkingAreaSprite.y + 300 : parkingAreaSprite.y + 250,
+            x: isHorizontal ? parkingAreaSprite.x + 650 : parkingAreaSprite.x + 600,
+            y: isHorizontal ? parkingAreaSprite.y + 300 : parkingAreaSprite.y + 200,
             duration: 1,
             repeat: -1,
             yoyo: true,
@@ -140,7 +140,8 @@ import { gsap } from "gsap";
         inactiveSpritesContainer.x = window.innerWidth / 2;
         activeCarsContainer.x = window.innerWidth / 2;
         activeCarsContainer.y = window.innerWidth / 2;
-
+        inactiveSpritesContainer.scale.set(0.8, 0.8);
+        activeCarsContainer.scale.set(0.8, 0.8);
         if (isHorizontal) {
             activeCarsContainer.position.y = +900;
             inactiveSpritesContainer.scale.set(1.5, 1.5);
