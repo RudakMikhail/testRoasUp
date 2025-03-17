@@ -140,8 +140,8 @@ import { gsap } from "gsap";
         inactiveSpritesContainer.x = window.innerWidth / 2;
         activeCarsContainer.x = window.innerWidth / 2;
         activeCarsContainer.y = window.innerWidth / 2;
-        inactiveSpritesContainer.scale.set(0.8, 0.8);
-        activeCarsContainer.scale.set(0.8, 0.8);
+        inactiveSpritesContainer.scale.set(0.9, 0.8);
+        activeCarsContainer.scale.set(0.9, 0.8);
         if (isHorizontal) {
             activeCarsContainer.position.y = +900;
             inactiveSpritesContainer.scale.set(1.5, 1.5);
