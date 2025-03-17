@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { Assets, Sprite, Container } from "pixi.js";
+import { Assets, Sprite, Container, Graphics } from "pixi.js";
 import { initDevtools } from '@pixi/devtools';
 import { gsap } from "gsap";
 
@@ -59,9 +59,17 @@ import { gsap } from "gsap";
         window.location.href = 'https://roasup.com';
     });
 
+    const darkOverlay = new Graphics();
+    darkOverlay.beginFill(0x000000, 0.7);
+    darkOverlay.drawRect(0, 0, window.innerWidth, window.innerHeight);
+    darkOverlay.endFill();
+    darkOverlay.visible = false;
+
     activeCarsContainer.addChild(redCarSprite, yellowCarSprite);
     inactiveSpritesContainer.addChild(blueCarSprite, greenCarSprite, parkingAreaSprite);
+
     app.stage.addChild(handSprite);
+    app.stage.addChild(darkOverlay);
     app.stage.addChild(logoSprite, buttonSprite);
 
     redCarSprite.interactive = true;
@@ -75,10 +83,12 @@ import { gsap } from "gsap";
         if (inactivityTimer) {
             clearTimeout(inactivityTimer);
         }
-        inactivityTimer = setTimeout(showLogoAndButton, 20000);
+        inactivityTimer = setTimeout(showLogoAndButton, 1000);
     }
 
     function showLogoAndButton() {
+        darkOverlay.visible = true;
+
         logoSprite.visible = true;
         buttonSprite.visible = true;
         logoSprite.x = window.innerWidth / 2;
@@ -89,17 +99,16 @@ import { gsap } from "gsap";
 
     function animateHand() {
         handSprite.x = isHorizontal ? activeCarsContainer.x - 100 : activeCarsContainer.x;
-        handSprite.y = isHorizontal ? activeCarsContainer.y - 50 : activeCarsContainer.y ;
+        handSprite.y = isHorizontal ? activeCarsContainer.y - 50 : activeCarsContainer.y;
 
         handAnimation = gsap.to(handSprite, {
-            x: isHorizontal ?  parkingAreaSprite.x + 650 : parkingAreaSprite.x + 630,
+            x: isHorizontal ? parkingAreaSprite.x + 650 : parkingAreaSprite.x + 630,
             y: isHorizontal ? parkingAreaSprite.y + 300 : parkingAreaSprite.y + 250,
             duration: 1,
             repeat: -1,
             yoyo: true,
             ease: "power1.inOut"
         });
-
     }
 
     function updateHandAnimation() {
@@ -117,8 +126,13 @@ import { gsap } from "gsap";
     }
 
     function resize() {
+        darkOverlay.clear();
+        darkOverlay.beginFill(0x000000, 0.7);
+        darkOverlay.drawRect(0, 0, window.innerWidth, window.innerHeight);
+        darkOverlay.endFill();
+
         yellowCarSprite.x = +100;
-        redCarSprite.x = -100
+        redCarSprite.x = -100;
         blueCarSprite.x = +210;
         blueCarSprite.y = +160;
         greenCarSprite.x = -210;
