@@ -118,11 +118,23 @@ import { gsap } from "gsap";
         animateHand();
     }
 
+    function showHand() {
+        handSprite.visible = true;
+        handSprite.alpha = 1;
+        animateHand();
+    }
+
     function hideHand() {
         if (handAnimation) {
             handAnimation.kill();
         }
-        handSprite.visible = false;
+        gsap.to(handSprite, {
+            alpha: 0,
+            duration: 0.5,
+            onComplete: () => {
+                handSprite.visible = false;
+            }
+        });
     }
 
     function resize() {
@@ -159,6 +171,7 @@ import { gsap } from "gsap";
     window.addEventListener('mousedown', resetInactivityTimer);
     window.addEventListener('keydown', resetInactivityTimer);
 
+    showHand()
     resetInactivityTimer();
     resize();
     animateHand();
