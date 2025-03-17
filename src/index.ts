@@ -61,36 +61,36 @@ import { gsap } from "gsap";
 
     activeCarsContainer.addChild(redCarSprite, yellowCarSprite);
     inactiveSpritesContainer.addChild(blueCarSprite, greenCarSprite, parkingAreaSprite);
+    app.stage.addChild(handSprite);
     app.stage.addChild(logoSprite, buttonSprite);
-    app.stage.addChild(handSprite)
+
     redCarSprite.interactive = true;
     yellowCarSprite.interactive = true;
 
-
-    let inactivityTimer: NodeJS.Timeout | null = null
-    let handAnimation: gsap.core.Tween | null = null
+    let inactivityTimer: NodeJS.Timeout | null = null;
+    let handAnimation: gsap.core.Tween | null = null;
 
     function resetInactivityTimer() {
         if (inactivityTimer) {
-            clearTimeout(inactivityTimer)
+            clearTimeout(inactivityTimer);
         }
-        inactivityTimer = setTimeout(showLogoAndButton, 20000);
+        inactivityTimer = setTimeout(showLogoAndButton, 1000);
     }
 
     function showLogoAndButton() {
-        logoSprite.visible = true
-        buttonSprite.visible = true
-        logoSprite.x = window.innerWidth / 2
-        logoSprite.y = window.innerHeight / 2 - 50
-        buttonSprite.x = window.innerWidth / 2
-        buttonSprite.y = window.innerHeight / 2 + 150
+        logoSprite.visible = true;
+        buttonSprite.visible = true;
+        logoSprite.x = window.innerWidth / 2;
+        logoSprite.y = window.innerHeight / 2 - 50;
+        buttonSprite.x = window.innerWidth / 2;
+        buttonSprite.y = window.innerHeight / 2 + 150;
     }
 
     function animateHand() {
-        handSprite.x = activeCarsContainer.x
-        handSprite.y = activeCarsContainer.y
+        handSprite.x = activeCarsContainer.x;
+        handSprite.y = activeCarsContainer.y;
 
-        gsap.to(handSprite, {
+        handAnimation = gsap.to(handSprite, {
             x: parkingAreaSprite.x + 500,
             y: parkingAreaSprite.y + 200,
             duration: 1,
@@ -115,15 +115,23 @@ import { gsap } from "gsap";
     }
 
     function resize() {
-        yellowCarSprite.x = - 100
-        redCarSprite.x = + 100
-        blueCarSprite.x = + 210
-        blueCarSprite.y = + 160
-        greenCarSprite.x = - 210
-        greenCarSprite.y = + 160
-        inactiveSpritesContainer.x = window.innerWidth / 2
-        activeCarsContainer.x = window.innerWidth / 2
-        activeCarsContainer.y = window.innerWidth / 2
+        const isHorizontal = innerHeight > innerWidth;
+        yellowCarSprite.x = -100;
+        redCarSprite.x = +100;
+        blueCarSprite.x = +210;
+        blueCarSprite.y = +160;
+        greenCarSprite.x = -210;
+        greenCarSprite.y = +160;
+        inactiveSpritesContainer.x = window.innerWidth / 2;
+        activeCarsContainer.x = window.innerWidth / 2;
+        activeCarsContainer.y = window.innerWidth / 2;
+
+        if (isHorizontal) {
+            activeCarsContainer.position.y = +900;
+            inactiveSpritesContainer.scale.set(1.5, 1.5);
+            activeCarsContainer.scale.set(1.5, 1.5);
+        }
+
         updateHandAnimation();
     }
 
@@ -134,7 +142,6 @@ import { gsap } from "gsap";
     window.addEventListener('mousemove', resetInactivityTimer);
     window.addEventListener('mousedown', resetInactivityTimer);
     window.addEventListener('keydown', resetInactivityTimer);
-
 
     resetInactivityTimer();
     resize();
