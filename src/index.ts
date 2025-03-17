@@ -74,7 +74,7 @@ import { gsap } from "gsap";
         if (inactivityTimer) {
             clearTimeout(inactivityTimer);
         }
-        inactivityTimer = setTimeout(showLogoAndButton, 1000);
+        inactivityTimer = setTimeout(showLogoAndButton, 20000);
     }
 
     function showLogoAndButton() {
